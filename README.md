@@ -2,8 +2,8 @@
 <img src="https://i.imgur.com/Clzj7Xs.png" alt="osTicket logo"/>
 </p>
 
-<h1>osTicket - Prerequisites and Installation</h1>
-This tutorial outlines the prerequisites and installation of the open-source help desk ticketing system osTicket.<br />
+<h1>osTicket - Post-Install Configuration</h1>
+This tutorial outlines the post-install configuration of the open-source help desk ticketing system osTicket.<br />
 
 <h2>Video Demonstration</h2>
 
@@ -17,226 +17,138 @@ This tutorial outlines the prerequisites and installation of the open-source hel
 
 <h2>Operating Systems Used</h2>
 
-- Windows 10 (22H2)
+- Windows 10 (21H2)
 
-<h2>List of Prerequisites</h2>
+<h2>Post-Install Configuration Objectives</h2>
 
-- Microsoft Azure account
-- Basic knowledge of IIS
-- Remote Desktop access
-- osTicket installation files
-- HeidiSQL
+- Acknowledge the difference between the Agent Panel and Admin Panel.
+- Configure Roles to define permissions for agents.
+- Set up Departments to group tickets by areas of responsibility.
+- Create Teams to pull agents from multiple departments.
+- Configure user settings to allow or restrict ticket creation.
+- Add Agents (workers) and Users (customers).
+- Set up Service Level Agreements (SLAs) for ticket response times.
+- Create Help Topics for users to categorize their tickets.
 
-<h2>Installation Steps</h2>
+<h2>Configuration Steps</h2>
 
-<h3>1.) Creating a Virtual Machine</h3>
+<h3>1.) Acknowledge Agent Panel vs Admin Panel</h3>
 
-In Microsoft Azure, we will create a VM and add it to a new Resource Group, titled "osTicket". 
+- The **Agent Panel** is used by agents to work on tickets.
+- The **Admin Panel** is used to manage system settings, configurations, and permissions.
 
-- **VM Name:** osticket-vm  
-- **Image:** Windows 10 Pro, version 22H2 - x64 Gen2  
-- **Size:** 2 vCPUs, 8 GiB memory  
+<h3>2.) Configure Roles</h3>
 
-Check the licensing box and review & create the VM. No changes are needed for management, disks, or networking sections.
+- Navigate to **Admin Panel -> Agents -> Roles**.
+- Add a new role called **Supreme Admin**.
+  - Define permissions for agents based on the role they will have. In this lab, we will give permissions for the Tickets, Tasks, and Knowledgebase sections.
 
 <p>
-<img src="https://i.imgur.com/Bz829jL.png" height="80%" width="80%" alt="Step 1 Lab 3"/>
+<img src="https://i.imgur.com/9dJCITM.png" height="80%" width="80%" alt="Step 2 Lab 3"/>
 </p>
 
 <p>
-<img src="https://i.imgur.com/rHmcRf3.png" height="80%" width="80%" alt="Step 1 Lab 2"/>
+<img src="https://i.imgur.com/LH17Nqu.png" height="80%" width="80%" alt="Step 2 Lab 3"/>
 </p>
 
-<h3>2.) Accessing the Virtual Machine</h3>
+<h3>3.) Configure Departments</h3>
 
-- Log into the VM using **Remote Desktop** with the credentials created during the VM setup.
+- Navigate to **Admin Panel -> Agents -> Departments**.
+- Add a new department called **SysAdmins**.
+  - Use departments to control ticket visibility and assign areas of responsibility (e.g., Help Desk, SysAdmins, Networking).
 
 <p>
-<img src="https://i.imgur.com/8IdvRmZ.png" height="80%" width="80%" alt="Step 1 Lab 3"/>
+<img src="https://i.imgur.com/WmvPMtk.png" height="80%" width="80%" alt="Step 2 Lab 3"/>
 </p>
 
-<h3>3.) Download and Prepare Installation Files</h3>
+<h3>4.) Configure Teams</h3>
 
-- Within the VM, download the `osTicket-Installation-Files.zip` and unzip it to your desktop. The folder should be named `osTicket-Installation-Files`.
+- Navigate to **Admin Panel -> Agents -> Teams**.
+- Create a new team called **Online Banking**.
+  - Pull agents from different departments to form specialized teams.
 
 <p>
-<img src="https://i.imgur.com/6imV7Hy.png" height="80%" width="80%" alt="Step 1 Lab 3"/>
+<img src="https://i.imgur.com/4FEa6Y1.png" height="80%" width="80%" alt="Step 2 Lab 3"/>
 </p>
 
-<h3>4.) Install IIS and Enable Required Features</h3>
+<h3>5.) Allow Anyone to Create Tickets</h3>
 
-- Open **Control Panel** -> **Programs** -> **Turn Windows features on or off**.
-- Install/enable **IIS** with the following features:
-  - **World Wide Web Services** -> **Application Development Features** -> [X] CGI
+- Navigate to **Admin Panel -> Settings -> User Settings**.
+- Uncheck **Require registration and login to create tickets** to enforce ticket creation by anyone.
+- Enable **Public - Anyone can register** to disable requiring users to register and log in before creating tickets.
 
 <p>
-<img src="https://i.imgur.com/Htr4j9h.png" height="80%" width="80%" alt="Step 1 Lab 3"/>
+<img src="https://i.imgur.com/zwlsNTN.png" height="80%" width="80%" alt="Step 2 Lab 3"/>
+</p>
+
+<h3>6.) Configure Agents (Workers)</h3>
+
+- Navigate to **Admin Panel -> Agents -> Add New**.
+- Add agents with the following details:
+  - **Jane**: Assigned to the **SysAdmins** department.
+  - **John**: Assigned to the **Support** department.
+
+<p>
+<img src="https://i.imgur.com/0Yyr2vR.png" height="80%" width="80%" alt="Step 2 Lab 3"/>
 </p>
 
 <p>
-<img src="https://i.imgur.com/4Q1PaOl.png" height="80%" width="80%" alt="Step 1 Lab 3"/>
+<img src="https://i.imgur.com/uCV94g6.png" height="80%" width="80%" alt="Step 2 Lab 3"/>
 </p>
 
 <p>
-<img src="https://i.imgur.com/cm20H8J.png" height="80%" width="80%" alt="Step 1 Lab 3"/>
+<img src="https://i.imgur.com/nALrgaJ.png" height="80%" width="80%" alt="Step 2 Lab 3"/>
 </p>
 
-<h3>5.) Install Required Components</h3>
+<p>
+<img src="https://i.imgur.com/yzZof2X.png" height="80%" width="80%" alt="Step 2 Lab 3"/>
+</p>
 
-- From the `osTicket-Installation-Files` folder:
-  - Install **PHP Manager for IIS**: `PHPManagerForIIS_V1.5.0.msi`.
-  - Install **Rewrite Module**: `rewrite_amd64_en-US.msi`.
+<h3>7.) Configure Users (Customers)</h3>
+
+- Navigate to **Agent Panel -> Users -> Add New**.
+- Add users with the following details:
+  - **Karen**
+  - **Ken**
  
 <p>
-<img src="https://i.imgur.com/TmRwTh9.png" height="80%" width="80%" alt="Step 1 Lab 3"/>
+<img src="https://i.imgur.com/xrJ8gm6.png" height="80%" width="80%" alt="Step 2 Lab 3"/>
 </p>
 
-<h3>6.) Setup PHP</h3>
+<h3>8.) Configure SLA (Service Level Agreements)</h3>
 
-- Create the directory `C:\PHP`.
-- Unzip `PHP 7.3.8` (`php-7.3.8-nts-Win32-VC15-x86.zip`) into the `C:\PHP` folder.
-- Install `VC_redist.x86.exe`.
-
-<p>
-<img src="https://i.imgur.com/Khwf0Tv.png" height="80%" width="80%" alt="Step 1 Lab 3"/>
-</p>
+- Navigate to **Admin Panel -> Manage -> SLA**.
+- Add the following SLAs:
+  - **Sev-A**: Grace Period = 1 hour, Schedule = 24/7.
+  - **Sev-B**: Grace Period = 4 hours, Schedule = 24/7.
+  - **Sev-C**: Grace Period = 8 hours, Schedule = Business Hours.
 
 <p>
-<img src="https://i.imgur.com/0IRX6FM.png" height="80%" width="80%" alt="Step 1 Lab 3"/>
-</p>
-
-<h3>7.) Install MySQL</h3>
-
-- From the `osTicket-Installation-Files` folder, install MySQL 5.5.62 (`mysql-5.5.62-win32.msi`).
-  - Select **Typical Setup**.
-  - Launch the Configuration Wizard:
-    - **Standard Configuration**
-    - Input a username and password, don't forget this!
-
-<p>
-<img src="https://i.imgur.com/m5NO1HX.png" height="80%" width="80%" alt="Step 1 Lab 3"/>
-</p>
-
-<h3>8.) Configure IIS</h3>
-
-- Open IIS as an administrator.
-- Register PHP:
-  - Go to **PHP Manager** -> Register PHP path -> `C:\PHP\php-cgi.exe`.
-- Reload IIS (Stop and Start the server).
-
-<p>
-<img src="https://i.imgur.com/m5NO1HX.png" height="80%" width="80%" alt="Step 1 Lab 3"/>
+<img src="https://i.imgur.com/cLC1cDs.png" height="80%" width="80%" alt="Step 2 Lab 3"/>
 </p>
 
 <p>
-<img src="https://i.imgur.com/OPR6ELG.png" height="80%" width="80%" alt="Step 1 Lab 3"/>
-</p>
-
-<h3>9.) Install osTicket</h3>
-
-- From the `osTicket-Installation-Files` folder:
-  - Unzip `osTicket-v1.15.8.zip`.
-  - Copy the `upload` folder into `C:\inetpub\wwwroot`.
-  - Rename the `upload` folder to `osTicket`.
-- Reload IIS (Stop and Start the server).
-
-<p>
-<img src="https://i.imgur.com/QAGjmly.png" height="80%" width="80%" alt="Step 1 Lab 3"/>
+<img src="https://i.imgur.com/scM2F5T.png" height="80%" width="80%" alt="Step 2 Lab 3"/>
 </p>
 
 <p>
-<img src="https://i.imgur.com/UNeiP4j.png" height="80%" width="80%" alt="Step 1 Lab 3"/>
+<img src="https://i.imgur.com/PGe4b44.png" height="80%" width="80%" alt="Step 2 Lab 3"/>
 </p>
 
-<h3>10.) Configure osTicket</h3>
+<h3>9.) Configure Help Topics</h3>
 
-- Open IIS:
-  - Navigate to **Sites** -> **Default** -> **osTicket**.
-  - On the right, click **Browse *:80**.
-
-<p>
-<img src="https://i.imgur.com/Vo85YbB.png" height="80%" width="80%" alt="Step 1 Lab 3"/>
-</p>
-
-<p>
-<img src="https://i.imgur.com/oM0muFz.png" height="80%" width="80%" alt="Step 1 Lab 3"/>
-</p>
-
-- Note extensions that are not enabled. Go back to IIS:
-  - Navigate to **Sites** -> **Default** -> **osTicket**.
-  - Double-click **PHP Manager** -> Click **Enable or disable an extension**.
-  - Enable the following extensions:
-    - `php_imap.dll`
-    - `php_intl.dll`
-    - `php_opcache.dll`
+- Navigate to **Admin Panel -> Manage -> Help Topics**.
+- Add the following help topics for users to select when creating a ticket:
+  - **Business Critical Outage**
+  - **Personal Computer Issues**
+  - **Equipment Request**
+  - **Password Reset**
+  - **Other**
 
 <p>
-<img src="https://i.imgur.com/3w4E5N7.png" height="80%" width="80%" alt="Step 1 Lab 3"/>
-</p>
-
-<h3>11.) Update Configuration Files</h3>
-
-- Rename `ost-config.php`:
-  - From: `C:\inetpub\wwwroot\osTicket\include\ost-sampleconfig.php`
-  - To: `C:\inetpub\wwwroot\osTicket\include\ost-config.php`.
-- Assign Permissions:
-  - Disable inheritance -> Remove all permissions.
-  - Add new permissions -> **Everyone** -> **Full control**.
-
-<p>
-<img src="https://i.imgur.com/18W6jYt.png" height="80%" width="80%" alt="Step 1 Lab 3"/>
-</p>
-
-<p>
-<img src="https://i.imgur.com/Gj686F9.png" height="80%" width="80%" alt="Step 1 Lab 3"/>
-</p>
-
-<h3>12.) Complete osTicket Setup</h3>
-
-- In the browser, continue the osTicket setup:
-  - Set **Helpdesk Name**.
-  - Set **Default email** (receives emails from customers).
-
-<p>
-<img src="https://i.imgur.com/lFfXfPa.png" height="80%" width="80%" alt="Step 1 Lab 3"/>
-</p>
-
-<h3>13.) Install HeidiSQL and Configure Database</h3>
-
-- From the `osTicket-Installation-Files` folder, install **HeidiSQL**.
-- Open HeidiSQL:
-  - Create a new session: **Username:** root / **Password:** root.
-  - Connect to the session.
-  - Create a database named `osTicket`.
-
-<p>
-<img src="https://i.imgur.com/3MktR5j.png" height="80%" width="80%" alt="Step 1 Lab 3"/>
-</p>
-
-<p>
-<img src="https://i.imgur.com/45BnPbc.png" height="80%" width="80%" alt="Step 1 Lab 3"/>
-</p>
-
-<h3>14.) Finalize osTicket Installation</h3>
-
-- In the browser, complete the setup:
-  - **MySQL Database:** osTicket  
-  - **MySQL Username:** root  
-  - **MySQL Password:** root  
-- Click **Install Now!**
-
-<p>
-<img src="https://i.imgur.com/niqOpoY.png" height="80%" width="80%" alt="Step 1 Lab 3"/>
-</p>
-
-<h3>15.) Verify Installation</h3>
-
-- Access your help desk login page: `http://localhost/osTicket/scp/login.php`.
-
-<p>
-<img src="https://i.imgur.com/fsadUTz.png" height="80%" width="80%" alt="Step 1 Lab 3"/>
+<img src="https://i.imgur.com/QkUOKCA.png" height="80%" width="80%" alt="Step 2 Lab 3"/>
 </p>
 
 <h2>Conclusion</h2>
 
-Congratulations! You have successfully installed and configured osTicket on your virtual machine. Your help desk system is now ready to use!
+By completing the post-installation configuration steps, you have successfully customized osTicket to suit your organization's requirements. You are now ready to start using osTicket to manage and resolve customer issues efficiently.
